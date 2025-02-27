@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.psychologyapp.ui.HomeFragment">
+        <action
+            android:id="@+id/action_home_to_meditation"
+            app:destination="@id/meditationFragment" />
+        <action
+            android:id="@+id/action_home_to_search"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_home_to_psychology"
+            app:destination="@id/psychologyFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/meditationFragment"
+        android:name="com.example.psychologyapp.ui.MeditationFragment" />
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.psychologyapp.ui.SearchFragment" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.psychologyapp.ui.SettingsFragment" />
+
+    <fragment
+        android:id="@+id/psychologyFragment"
+        android:name="com.example.psychologyapp.ui.PsychologyFragment">
+        <action
+            android:id="@+id/action_psychology_to_detail"
+            app:destination="@id/psychologyDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/psychologyDetailFragment"
+        android:name="com.example.psychologyapp.ui.PsychologyDetailFragment">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="content"
+            app:argType="string" />
+    </fragment>
+</navigation>

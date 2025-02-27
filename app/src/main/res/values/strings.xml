@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Psychology App</string>
+    <string name="welcome_message">Добро пожаловать!</string>
+    <string name="meditation">Медитация</string>
+    <string name="psychology">Психология</string>
+    <string name="search">Поиск</string>
+    <string name="settings">Настройки</string>
+    <string name="meditation_title">Выберите медитацию</string>
+    <string name="search_hint">Введите запрос (например, \'calm\')</string>
+    <string name="dark_theme">Темная тема</string>
+    <string name="start">Старт</string>
+    <string name="stop">Стоп</string>
+    <string name="psychology_title">Психология</string>
+    <string name="notes_hint">Ваши заметки</string>
+</resources>
