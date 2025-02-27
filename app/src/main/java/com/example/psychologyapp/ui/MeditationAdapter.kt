@@ -3,6 +3,7 @@ package com.example.psychologyapp.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.psychologyapp.data.Meditation
 import com.example.psychologyapp.databinding.ItemMeditationBinding
 
@@ -25,6 +26,11 @@ class MeditationAdapter(
     inner class ViewHolder(private val binding: ItemMeditationBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(meditation: Meditation) {
             binding.tvTitle.text = meditation.title
+            meditation.imageUrl?.let {
+                Glide.with(binding.root.context)
+                    .load(it)
+                    .into(binding.ivMeditationImage)
+            }
             binding.root.setOnClickListener { onClick(meditation) }
         }
     }

@@ -5,28 +5,42 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.psychologyapp.data.ApiService
-import com.example.psychologyapp.data.Photo
+import com.example.psychologyapp.data.Meditation
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchViewModel : ViewModel() {
-    private val _photos = MutableLiveData<List<Photo>>()
-    val photos: LiveData<List<Photo>> get() = _photos
+    private val _meditations = MutableLiveData<List<Meditation>>()
+    val meditations: LiveData<List<Meditation>> get() = _meditations
 
-    private val apiService = Retrofit.Builder()
+    private val apiServicePostman = Retrofit.Builder()
+        .baseUrl("https://07dc2bea-0a78-4e18-a929-c103a5731ca5.mock.pstmn.io") // Замени на свой URL
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(ApiService::class.java)
+
+    private val apiServiceUnsplash = Retrofit.Builder()
         .baseUrl("https://api.unsplash.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(ApiService::class.java)
 
-    fun searchImages(query: String) {
+    fun searchMeditations(query: String) {
         viewModelScope.launch {
             try {
-                val response = apiService.searchPhotos(query, "YOUR_UNSPLASH_API_KEY") // Замени на свой ключ
-                _photos.postValue(response.results)
+                val allMeditations = apiServicePostman.getMeditations().meditations
+                val filteredMeditations = allMeditations.filter {
+                    it.title.contains(query, ignoreCase = true)
+                }
+                val meditationsWithImages = filteredMeditations.map { meditation ->
+                    val imageResponse = apiServiceUnsplash.searchPhotos(meditation.title, "mDSnVSCQ10MtOmE35l1H-eHJFLOZOhl1qQxNE1hIgWw")
+                    val imageUrl = imageResponse.results.firstOrNull()?.urls?.regular
+                    meditation.copy(imageUrl = imageUrl)
+                }
+                _meditations.postValue(meditationsWithImages)
             } catch (e: Exception) {
-                _photos.postValue(emptyList())
+                _meditations.postValue(emptyList())
             }
         }
     }

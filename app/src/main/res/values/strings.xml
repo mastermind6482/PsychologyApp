@@ -6,7 +6,7 @@
     <string name="search">Поиск</string>
     <string name="settings">Настройки</string>
     <string name="meditation_title">Выберите медитацию</string>
-    <string name="search_hint">Введите запрос (например, \'calm\')</string>
+    <string name="search_hint">Введите название медитации</string>
     <string name="dark_theme">Темная тема</string>
     <string name="start">Старт</string>
     <string name="stop">Стоп</string>

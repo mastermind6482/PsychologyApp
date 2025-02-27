@@ -17,8 +17,14 @@ class PsychologyViewModel : ViewModel() {
     private val _notes = MutableLiveData<String>("")
     val notes: LiveData<String> get() = _notes
 
-    private val apiService = Retrofit.Builder()
-        .baseUrl("https://your-postman-mock-server-id.mock.pstmn.io/") // Замени на свой URL от Postman
+    private val apiServicePostman = Retrofit.Builder()
+        .baseUrl("https://07dc2bea-0a78-4e18-a929-c103a5731ca5.mock.pstmn.io") // Замени на свой URL
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(ApiService::class.java)
+
+    private val apiServiceUnsplash = Retrofit.Builder()
+        .baseUrl("https://api.unsplash.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(ApiService::class.java)
@@ -30,8 +36,13 @@ class PsychologyViewModel : ViewModel() {
     private fun fetchArticles() {
         viewModelScope.launch {
             try {
-                val response = apiService.getArticles()
-                _articles.postValue(response.articles)
+                val response = apiServicePostman.getArticles()
+                val articlesWithImages = response.articles.map { article ->
+                    val imageResponse = apiServiceUnsplash.searchPhotos(article.title, "mDSnVSCQ10MtOmE35l1H-eHJFLOZOhl1qQxNE1hIgWw")
+                    val imageUrl = imageResponse.results.firstOrNull()?.urls?.regular
+                    article.copy(imageUrl = imageUrl)
+                }
+                _articles.postValue(articlesWithImages)
             } catch (e: Exception) {
                 _articles.postValue(emptyList())
             }

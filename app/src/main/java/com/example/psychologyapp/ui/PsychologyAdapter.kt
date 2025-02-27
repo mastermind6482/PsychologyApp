@@ -3,6 +3,7 @@ package com.example.psychologyapp.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.psychologyapp.data.Article
 import com.example.psychologyapp.databinding.ItemArticleBinding
 
@@ -25,6 +26,11 @@ class PsychologyAdapter(
     inner class ViewHolder(private val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article) {
             binding.tvTitle.text = article.title
+            article.imageUrl?.let {
+                Glide.with(binding.root.context)
+                    .load(it)
+                    .into(binding.ivArticleImage)
+            }
             binding.root.setOnClickListener { onClick(article) }
         }
     }

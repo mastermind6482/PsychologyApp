@@ -14,7 +14,7 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SearchViewModel by viewModels()
-    private lateinit var adapter: SearchAdapter
+    private lateinit var adapter: MeditationAdapter // Используем MeditationAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +29,16 @@ class SearchFragment : Fragment() {
         setupRecyclerView()
         binding.btnSearch.setOnClickListener {
             val query = binding.etSearch.text.toString()
-            viewModel.searchImages(query)
+            viewModel.searchMeditations(query)
         }
-        viewModel.photos.observe(viewLifecycleOwner) { photos ->
-            adapter.updatePhotos(photos)
+        viewModel.meditations.observe(viewLifecycleOwner) { meditations ->
+            adapter = MeditationAdapter(meditations) { /* Обработка клика, если нужно */ }
+            binding.rvResults.adapter = adapter
         }
     }
 
     private fun setupRecyclerView() {
-        adapter = SearchAdapter()
         binding.rvResults.layoutManager = LinearLayoutManager(context)
-        binding.rvResults.adapter = adapter
     }
 
     override fun onDestroyView() {

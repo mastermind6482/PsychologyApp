@@ -6,5 +6,6 @@ data class MeditationResponse(
 
 data class Meditation(
     val title: String,
-    val duration: Long
+    val duration: Long,
+    val imageUrl: String? = null
 )
