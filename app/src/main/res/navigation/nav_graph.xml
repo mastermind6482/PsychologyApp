@@ -23,7 +23,11 @@
 
     <fragment
         android:id="@+id/meditationFragment"
-        android:name="com.example.psychologyapp.ui.MeditationFragment" />
+        android:name="com.example.psychologyapp.ui.MeditationFragment">
+        <action
+            android:id="@+id/action_meditation_to_detail"
+            app:destination="@id/meditationDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
@@ -50,5 +54,26 @@
         <argument
             android:name="content"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/meditationDetailFragment"
+        android:name="com.example.psychologyapp.ui.MeditationDetailFragment">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="duration"
+            app:argType="long" />
+        <argument
+            android:name="instruction"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" /> <!-- Добавляем nullable -->
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" /> <!-- Добавляем nullable -->
     </fragment>
 </navigation>

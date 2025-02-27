@@ -7,5 +7,5 @@ data class ArticleResponse(
 data class Article(
     val title: String,
     val content: String,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
 )
